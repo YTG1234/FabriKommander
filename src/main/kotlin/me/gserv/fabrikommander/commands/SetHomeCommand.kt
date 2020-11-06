@@ -5,7 +5,6 @@ import me.gserv.fabrikommander.data.PlayerDataManager
 import me.gserv.fabrikommander.data.spec.Home
 import me.gserv.fabrikommander.utils.*
 import net.minecraft.server.command.CommandManager
-import net.minecraft.text.LiteralText
 
 class SetHomeCommand(val dispatcher: Dispatcher) {
     fun register() {

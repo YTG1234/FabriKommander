@@ -60,5 +60,5 @@ fun hover(text: MutableText, event: HoverEvent) = text.setStyle(text.style.withH
 // endregion
 
 // region: Operators
-operator fun MutableText.plus(other: MutableText): MutableText = this.append(other)
+operator fun MutableText.plus(other: Text): MutableText = this.append(other)
 // endregion
