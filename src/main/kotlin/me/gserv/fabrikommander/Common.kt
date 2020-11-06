@@ -29,6 +29,7 @@ object Common : ModInitializer {
 
         // Teleport commands
         TpaCommand(dispatcher).register()
+        TpaHereCommand(dispatcher).register()
 
         // Misc comands
         PingCommand(dispatcher).register()

@@ -20,27 +20,40 @@ class TpaRequest(
 
     fun notifyTarget() {
         // Message will be configurable later
-        val message = click(
-            hover(
-                source.displayName as MutableText + yellow(
-                    " has requested " + when (tpaHere) {
-                        true -> "you"
-                        false -> "to"
-                    } + " teleport to " + when (tpaHere) { // Will change to one when later, for now it's two
-                        true -> "them"
-                        false -> "you"
-                    } + "."
+        val message =
+            source.displayName as MutableText + yellow(
+                " has requested " + when (tpaHere) {
+                    true -> "you"
+                    false -> "to"
+                } + " teleport to " + when (tpaHere) { // Will change to one when later, for now it's two
+                    true -> "them"
+                    false -> "you"
+                }
+            ) + reset(". [") + click(
+                hover(
+                    aqua("Accept"),
+                    HoverEvent(
+                        HoverEvent.Action.SHOW_TEXT,
+                        green("Click here to accept the request.")
+                    )
+                ),
+                ClickEvent(
+                    ClickEvent.Action.RUN_COMMAND,
+                    "/tpaccept " + source.uuidAsString // There can be multiple active requests
+                )
+            ) + reset(" / ") + hover(
+                click(
+                    aqua("Deny"),
+                    ClickEvent(
+                        ClickEvent.Action.RUN_COMMAND,
+                        "/tpdeny " + source.uuidAsString // There can be multiple active requests
+                    )
                 ),
                 HoverEvent(
                     HoverEvent.Action.SHOW_TEXT,
-                    yellow("Click to teleport!")
+                    red("Click here to deny the request.")
                 )
-            ),
-            ClickEvent(
-                ClickEvent.Action.RUN_COMMAND,
-                "/tpaccept " + source.uuidAsString // Command not implemented yet
-            )
-        )
+            ) + reset("]")
 
         target.sendSystemMessage(message, Util.NIL_UUID)
     }
