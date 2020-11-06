@@ -22,11 +22,11 @@ class TpaRequest(
         // Message will be configurable later
         val message = click(
             hover(
-                aqua(source.displayName as MutableText) + yellow(
-                    "has requested" + when (tpaHere) {
+                source.displayName as MutableText + yellow(
+                    " has requested " + when (tpaHere) {
                         true -> "you"
                         false -> "to"
-                    } + "teleport to" + when (tpaHere) { // Will change to one when later, for now it's two
+                    } + " teleport to " + when (tpaHere) { // Will change to one when later, for now it's two
                         true -> "them"
                         false -> "you"
                     } + "."
@@ -38,7 +38,7 @@ class TpaRequest(
             ),
             ClickEvent(
                 ClickEvent.Action.RUN_COMMAND,
-                "/tpaccept " + source.name // Command not implemented yet
+                "/tpaccept " + source.uuidAsString // Command not implemented yet
             )
         )
 
