@@ -30,7 +30,9 @@ object Common : ModInitializer {
         // Teleport commands
         TpaCommand(dispatcher).register()
         TpaHereCommand(dispatcher).register()
-        TpacceptCommand(dispatcher).register()
+        TpAcceptCommand(dispatcher).register()
+        TpCancelCommand(dispatcher).register()
+        TpDenyCommand(dispatcher).register()
 
         // Misc comands
         PingCommand(dispatcher).register()

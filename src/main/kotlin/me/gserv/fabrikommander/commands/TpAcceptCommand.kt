@@ -10,16 +10,16 @@ import net.minecraft.server.command.CommandManager.argument
 import net.minecraft.server.command.CommandManager.literal
 
 // I'm not sure how I should capitalise this
-class TpacceptCommand(val dispatcher: Dispatcher) {
+class TpAcceptCommand(val dispatcher: Dispatcher) {
     fun register() {
         dispatcher.register(
             literal("tpaccept").then(
-                argument("source", EntityArgumentType.player()).executes(this::tpacceptCommand)
+                argument("source", EntityArgumentType.player()).executes(this::tpAcceptCommand)
             )
         )
     }
 
-    fun tpacceptCommand(context: Context): Int {
+    fun tpAcceptCommand(context: Context): Int {
         val source = EntityArgumentType.getPlayer(context, "source")
         if (TeleportRequest.ACTIVE_REQUESTS[source.uuidAsString + context.source.player.uuidAsString] == null) {
             context.source.sendError(
