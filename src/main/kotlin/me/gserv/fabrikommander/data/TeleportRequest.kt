@@ -38,7 +38,7 @@ class TeleportRequest(
     fun notifyTarget() {
         // Message will be configurable later
         val message =
-            source.displayName as MutableText + yellow(
+            reset("") + source.displayName as MutableText + yellow( // reset("") used to make the vanilla click event for player names not apply to the whole message
                 " has requested " + when (inverted) {
                     true -> "you"
                     false -> "to"
