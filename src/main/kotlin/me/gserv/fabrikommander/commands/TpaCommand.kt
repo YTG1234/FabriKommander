@@ -1,6 +1,6 @@
 package me.gserv.fabrikommander.commands
 
-import me.gserv.fabrikommander.data.TpaRequest
+import me.gserv.fabrikommander.data.TeleportRequest
 import me.gserv.fabrikommander.utils.Context
 import me.gserv.fabrikommander.utils.Dispatcher
 import net.minecraft.command.argument.EntityArgumentType
@@ -19,7 +19,7 @@ class TpaCommand(val dispatcher: Dispatcher) {
     fun tpaCommand(context: Context): Int {
         val target = EntityArgumentType.getPlayer(context, "target")
         val source = context.source.player
-        val request = TpaRequest(source = source, target = target, tpaHere = false)
+        val request = TeleportRequest(source = source, target = target, inverted = false)
         request.notifyTarget()
         return 1
     }
