@@ -27,6 +27,7 @@ class TpDenyCommand(val dispatcher: Dispatcher) {
             )
             return 0
         }
+        TeleportRequest.ACTIVE_REQUESTS[source.uuidAsString + context.source.player.uuidAsString]!!.notifySourceOfDeny()
         TeleportRequest.ACTIVE_REQUESTS.remove(source.uuidAsString + context.source.player.uuidAsString)
         context.source.sendFeedback(
             aqua("Teleport request from ") + source.displayName + aqua(" was denied"),

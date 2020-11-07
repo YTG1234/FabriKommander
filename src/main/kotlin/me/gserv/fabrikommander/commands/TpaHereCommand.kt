@@ -3,6 +3,8 @@ package me.gserv.fabrikommander.commands
 import me.gserv.fabrikommander.data.TeleportRequest
 import me.gserv.fabrikommander.utils.Context
 import me.gserv.fabrikommander.utils.Dispatcher
+import me.gserv.fabrikommander.utils.aqua
+import me.gserv.fabrikommander.utils.plus
 import net.minecraft.command.argument.EntityArgumentType
 import net.minecraft.server.command.CommandManager.argument
 import net.minecraft.server.command.CommandManager.literal
@@ -20,7 +22,11 @@ class TpaHereCommand(val dispatcher: Dispatcher) {
         val target = EntityArgumentType.getPlayer(context, "target")
         val source = context.source.player
         val request = TeleportRequest(source = source, target = target, inverted = true)
-        request.notifyTarget()
+        request.notifyTargetOfRequest()
+        context.source.sendFeedback(
+            aqua("Teleport request sent to ") + target.displayName,
+            true
+        )
         return 1
     }
 }

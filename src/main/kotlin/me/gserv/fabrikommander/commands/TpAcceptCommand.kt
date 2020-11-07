@@ -21,13 +21,15 @@ class TpAcceptCommand(val dispatcher: Dispatcher) {
 
     fun tpAcceptCommand(context: Context): Int {
         val source = EntityArgumentType.getPlayer(context, "source")
-        if (TeleportRequest.ACTIVE_REQUESTS[source.uuidAsString + context.source.player.uuidAsString] == null) {
+        val request = TeleportRequest.ACTIVE_REQUESTS[source.uuidAsString + context.source.player.uuidAsString]
+        if (request == null) {
             context.source.sendError(
                 red("No active teleport request from ") + source.displayName
             )
             return 0
         }
-        TeleportRequest.ACTIVE_REQUESTS[source.uuidAsString + context.source.player.uuidAsString]!!.apply()
+        request.apply()
+        request.notifySourceOfAccept()
         TeleportRequest.ACTIVE_REQUESTS.remove(source.uuidAsString + context.source.player.uuidAsString)
         return 1
     }

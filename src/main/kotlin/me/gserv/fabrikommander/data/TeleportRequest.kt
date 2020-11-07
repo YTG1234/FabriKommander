@@ -35,7 +35,18 @@ class TeleportRequest(
         source.teleport(target.serverWorld, target.x, target.y, target.z, target.yaw, target.pitch)
     }
 
-    fun notifyTarget() {
+    fun notifySourceOfAccept() {
+        val message =
+            reset("") + target.displayName + aqua(" has accepted your teleport request")
+        source.sendSystemMessage(message, Util.NIL_UUID)
+    }
+
+    fun notifySourceOfDeny() {
+        val message = reset("") + target.displayName + aqua(" has denied your teleport request")
+        source.sendSystemMessage(message, Util.NIL_UUID)
+    }
+
+    fun notifyTargetOfRequest() {
         // Message will be configurable later
         val message =
             reset("") + source.displayName as MutableText + yellow( // reset("") used to make the vanilla click event for player names not apply to the whole message
@@ -72,6 +83,11 @@ class TeleportRequest(
                 )
             ) + reset("]")
 
+        target.sendSystemMessage(message, Util.NIL_UUID)
+    }
+
+    fun notifyTargetOfCancel() {
+        val message = reset("") + source.displayName + aqua(" has cancelled their teleport request.")
         target.sendSystemMessage(message, Util.NIL_UUID)
     }
 }

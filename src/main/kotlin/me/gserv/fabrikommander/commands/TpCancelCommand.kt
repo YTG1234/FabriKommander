@@ -27,6 +27,7 @@ class TpCancelCommand(val dispatcher: Dispatcher) {
             )
             return 0
         }
+        TeleportRequest.ACTIVE_REQUESTS[context.source.player.uuidAsString + target.uuidAsString]!!.notifyTargetOfCancel()
         TeleportRequest.ACTIVE_REQUESTS.remove(context.source.player.uuidAsString + target.uuidAsString)
         context.source.sendFeedback(aqua(
             "Teleport request to "
