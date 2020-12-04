@@ -51,11 +51,8 @@ class TeleportRequest(
         val message =
             reset("") + source.displayName as MutableText + yellow( // reset("") used to make the vanilla click event for player names not apply to the whole message
                 " has requested " + when (inverted) {
-                    true -> "you"
-                    false -> "to"
-                } + " teleport to " + when (inverted) { // Will change to one when later, for now it's two
-                    true -> "them"
-                    false -> "you"
+                    true -> "you teleport to them"
+                    false -> "to teleport to you"
                 }
             ) + reset(". [") + click(
                 hover(
