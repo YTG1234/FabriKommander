@@ -7,4 +7,6 @@ data class Player(
     val name: String,
 
     val homes: MutableList<Home> = mutableListOf(),
+
+    val backPos: Pos? = null,
 )

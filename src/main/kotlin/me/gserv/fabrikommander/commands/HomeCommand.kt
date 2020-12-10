@@ -36,7 +36,7 @@ class HomeCommand(val dispatcher: Dispatcher) {
                 false
             )
         } else {
-            val world = player.server.getWorld(RegistryKey.of(Registry.DIMENSION, home.world))
+            val world = player.server.getWorld(RegistryKey.of(Registry.DIMENSION, home.pos.world))
 
             if (world == null) {
                 context.source.sendFeedback(
@@ -44,13 +44,13 @@ class HomeCommand(val dispatcher: Dispatcher) {
                             aqua(name) +
                             red(" is in a world ") +
                             yellow("(") +
-                            aqua(identifierToWorldName(home.world)) +
+                            aqua(identifierToWorldName(home.pos.world)) +
                             yellow(") ") +
                             red("that no longer exists."),
                     false
                 )
             } else {
-                player.teleport(world, home.x, home.y, home.z, home.yaw, home.pitch)
+                player.teleport(world, home.pos.x, home.pos.y, home.pos.z, home.pos.yaw, home.pos.pitch)
 
                 context.source.sendFeedback(
                     green("Teleported to home: ") + aqua(name),

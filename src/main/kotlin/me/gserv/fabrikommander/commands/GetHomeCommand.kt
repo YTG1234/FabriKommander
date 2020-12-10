@@ -36,12 +36,12 @@ class GetHomeCommand(val dispatcher: Dispatcher) {
         } else {
             context.source.sendFeedback(
                 yellow("Home ") + aqua(name) + yellow(": [") +
-                        green("World: ") + aqua(home.world.toString()) + yellow(", ") +
-                        green("X: ") + aqua(home.x.toString()) + yellow(", ") +
-                        green("Y: ") + aqua(home.y.toString()) + yellow(", ") +
-                        green("Z: ") + aqua(home.z.toString()) + yellow(", ") +
-                        green("Pitch: ") + aqua(home.pitch.toString()) + yellow(", ") +
-                        green("Yaw: ") + aqua(home.yaw.toString()) + yellow("]"),
+                        green("World: ") + aqua(home.pos.world.toString()) + yellow(", ") +
+                        green("X: ") + aqua(home.pos.x.toString()) + yellow(", ") +
+                        green("Y: ") + aqua(home.pos.y.toString()) + yellow(", ") +
+                        green("Z: ") + aqua(home.pos.z.toString()) + yellow(", ") +
+                        green("Pitch: ") + aqua(home.pos.pitch.toString()) + yellow(", ") +
+                        green("Yaw: ") + aqua(home.pos.yaw.toString()) + yellow("]"),
                 false
             )
         }

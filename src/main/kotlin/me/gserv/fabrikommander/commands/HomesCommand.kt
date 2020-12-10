@@ -41,7 +41,7 @@ class HomesCommand(val dispatcher: Dispatcher) {
             var text = green("Homes: ")
 
             for (element in homes.withIndex()) {
-                val world = player.server.getWorld(RegistryKey.of(Registry.DIMENSION, element.value.world))
+                val world = player.server.getWorld(RegistryKey.of(Registry.DIMENSION, element.value.pos.world))
 
                 if (world == null) {
                     text += hover(
@@ -51,20 +51,20 @@ class HomesCommand(val dispatcher: Dispatcher) {
                             HoverEvent.Action.SHOW_TEXT,
                             red("This home is in a world ") +
                                     yellow("(") +
-                                    aqua(identifierToWorldName(element.value.world)) +
+                                    aqua(identifierToWorldName(element.value.pos.world)) +
                                     yellow(") ") +
                                     red("that no longer exists.")
                         )
                     )
                 } else {
                     text += click(
-                        if (element.value.world == player.serverWorld.registryKey.value) {
+                        if (element.value.pos.world == player.serverWorld.registryKey.value) {
                             hover(
                                 aqua(element.value.name),
                                 HoverEvent(
                                     HoverEvent.Action.SHOW_TEXT,
                                     white("This home is in: ") +
-                                            aqua(identifierToWorldName(element.value.world)) +
+                                            aqua(identifierToWorldName(element.value.pos.world)) +
                                             white(".\n") +
                                             yellow("Click to teleport!")
                                 )
@@ -75,7 +75,7 @@ class HomesCommand(val dispatcher: Dispatcher) {
                                 HoverEvent(
                                     HoverEvent.Action.SHOW_TEXT,
                                     white("This home is in: ") +
-                                            darkAqua(identifierToWorldName(element.value.world)) +
+                                            darkAqua(identifierToWorldName(element.value.pos.world)) +
                                             white(".\n") +
                                             yellow("Click to teleport!")
                                 )
