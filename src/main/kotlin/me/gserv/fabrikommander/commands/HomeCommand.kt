@@ -2,7 +2,15 @@ package me.gserv.fabrikommander.commands
 
 import com.mojang.brigadier.arguments.StringArgumentType
 import me.gserv.fabrikommander.data.PlayerDataManager
-import me.gserv.fabrikommander.utils.*
+import me.gserv.fabrikommander.data.spec.Pos
+import me.gserv.fabrikommander.utils.Context
+import me.gserv.fabrikommander.utils.Dispatcher
+import me.gserv.fabrikommander.utils.aqua
+import me.gserv.fabrikommander.utils.green
+import me.gserv.fabrikommander.utils.identifierToWorldName
+import me.gserv.fabrikommander.utils.plus
+import me.gserv.fabrikommander.utils.red
+import me.gserv.fabrikommander.utils.yellow
 import net.minecraft.server.command.CommandManager
 import net.minecraft.util.registry.Registry
 import net.minecraft.util.registry.RegistryKey
@@ -50,6 +58,17 @@ class HomeCommand(val dispatcher: Dispatcher) {
                     false
                 )
             } else {
+                PlayerDataManager.setBackPos(
+                    player.uuid,
+                    Pos(
+                        x = player.x,
+                        y = player.y,
+                        z = player.z,
+                        world = player.world.registryKey.value,
+                        yaw = player.yaw,
+                        pitch = player.pitch
+                    )
+                )
                 player.teleport(world, home.pos.x, home.pos.y, home.pos.z, home.pos.yaw, home.pos.pitch)
 
                 context.source.sendFeedback(

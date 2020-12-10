@@ -3,6 +3,7 @@ package me.gserv.fabrikommander.data
 import com.charleskorn.kaml.Yaml
 import me.gserv.fabrikommander.data.spec.Home
 import me.gserv.fabrikommander.data.spec.Player
+import me.gserv.fabrikommander.data.spec.Pos
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.WorldSavePath
@@ -112,6 +113,13 @@ object PlayerDataManager {
         saveData(uuid)
 
         return result
+    }
+
+    fun getBackPos(uuid: UUID): Pos? = cache[uuid]?.backPos
+
+    fun setBackPos(uuid: UUID, newPos: Pos) {
+        cache[uuid]?.backPos = newPos
+        saveData(uuid)
     }
 
     fun shutdown() {
