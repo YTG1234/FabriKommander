@@ -1,7 +1,19 @@
 package me.gserv.fabrikommander.commands
 
+import mc.aegis.AegisCommandBuilder
 import me.gserv.fabrikommander.data.PlayerDataManager
-import me.gserv.fabrikommander.utils.*
+import me.gserv.fabrikommander.utils.Context
+import me.gserv.fabrikommander.utils.Dispatcher
+import me.gserv.fabrikommander.utils.aqua
+import me.gserv.fabrikommander.utils.click
+import me.gserv.fabrikommander.utils.darkAqua
+import me.gserv.fabrikommander.utils.green
+import me.gserv.fabrikommander.utils.hover
+import me.gserv.fabrikommander.utils.identifierToWorldName
+import me.gserv.fabrikommander.utils.plus
+import me.gserv.fabrikommander.utils.red
+import me.gserv.fabrikommander.utils.white
+import me.gserv.fabrikommander.utils.yellow
 import net.minecraft.command.argument.EntityArgumentType
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.network.ServerPlayerEntity
@@ -9,23 +21,21 @@ import net.minecraft.text.ClickEvent
 import net.minecraft.text.HoverEvent
 import net.minecraft.util.registry.Registry
 import net.minecraft.util.registry.RegistryKey
-import org.apache.logging.log4j.core.jmx.Server
 
 class HomesCommand(val dispatcher: Dispatcher) {
     fun register() {
         dispatcher.register(
-            CommandManager.literal("homes")
-                .executes { homesCommand(it, it.source.player) }
-                .then(
-                    CommandManager.argument("player", EntityArgumentType.player())
-                        .requires { it.hasPermissionLevel(2) }
-                        .executes { homesCommand(it, EntityArgumentType.getPlayer(it, "player")) }
-                        .suggests { context, builder ->
-                            context.source.minecraftServer.playerNames.forEach(builder::suggest)
-
-                            builder.buildFuture()
-                        }
-                )
+            AegisCommandBuilder("homes") {
+                executes { homesCommand(it, it.source.player) }
+                custom(CommandManager.argument("player", EntityArgumentType.player())) {
+                    requires { it.hasPermissionLevel(2) }
+                    suggests { context, builder ->
+                        context.source.minecraftServer.playerNames.forEach(builder::suggest)
+                        builder.buildFuture()
+                    }
+                    executes { homesCommand(it, EntityArgumentType.getPlayer(it, "player")) }
+                }
+            }.build()
         )
     }
 

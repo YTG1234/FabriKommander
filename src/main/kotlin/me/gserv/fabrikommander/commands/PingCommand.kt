@@ -1,16 +1,16 @@
 package me.gserv.fabrikommander.commands
 
+import mc.aegis.AegisCommandBuilder
 import me.gserv.fabrikommander.utils.Context
 import me.gserv.fabrikommander.utils.Dispatcher
 import me.gserv.fabrikommander.utils.green
-import net.minecraft.server.command.CommandManager
-import net.minecraft.text.LiteralText
 
 class PingCommand(val dispatcher: Dispatcher) {
     fun register() {
         dispatcher.register(
-            CommandManager.literal("ping")
-                .executes { pingCommand(it) }
+            AegisCommandBuilder("ping") {
+                executes(::pingCommand)
+            }.build()
         )
     }
 

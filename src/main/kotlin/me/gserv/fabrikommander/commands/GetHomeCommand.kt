@@ -1,26 +1,33 @@
 package me.gserv.fabrikommander.commands
 
 import com.mojang.brigadier.arguments.StringArgumentType
+import mc.aegis.AegisCommandBuilder
 import me.gserv.fabrikommander.data.PlayerDataManager
-import me.gserv.fabrikommander.utils.*
-import net.minecraft.server.command.CommandManager
+import me.gserv.fabrikommander.utils.Context
+import me.gserv.fabrikommander.utils.Dispatcher
+import me.gserv.fabrikommander.utils.aqua
+import me.gserv.fabrikommander.utils.green
+import me.gserv.fabrikommander.utils.plus
+import me.gserv.fabrikommander.utils.red
+import me.gserv.fabrikommander.utils.yellow
 
 class GetHomeCommand(val dispatcher: Dispatcher) {
     fun register() {
         dispatcher.register(
-            CommandManager.literal("gethome")
-                .executes { getHome(it) }
-                .then(
-                    CommandManager.argument("name", StringArgumentType.word())
-                        .executes { getHome(it, StringArgumentType.getString(it, "name")) }
-                        .suggests { context, builder ->
-                            PlayerDataManager.getHomes(context.source.player.uuid)?.forEach {
+            AegisCommandBuilder("gethome") {
+                executes(::getHome)
+                word("name") {
+                    suggests { context, builder ->
+                        PlayerDataManager.getHomes(context.source.player.uuid)
+                            ?.forEach {
                                 builder.suggest(it.name)
                             }
 
-                            builder.buildFuture()
-                        }
-                )
+                        builder.buildFuture()
+                    }
+                    executes { getHome(it, StringArgumentType.getString(it, "name")) }
+                }
+            }.build()
         )
     }
 

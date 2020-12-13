@@ -1,28 +1,34 @@
 package me.gserv.fabrikommander.commands
 
 import com.mojang.brigadier.arguments.StringArgumentType
+import mc.aegis.AegisCommandBuilder
 import me.gserv.fabrikommander.data.PlayerDataManager
-import me.gserv.fabrikommander.utils.*
-import net.minecraft.server.command.CommandManager
+import me.gserv.fabrikommander.utils.Context
+import me.gserv.fabrikommander.utils.Dispatcher
+import me.gserv.fabrikommander.utils.aqua
+import me.gserv.fabrikommander.utils.green
+import me.gserv.fabrikommander.utils.identifierToWorldName
+import me.gserv.fabrikommander.utils.plus
+import me.gserv.fabrikommander.utils.red
+import me.gserv.fabrikommander.utils.yellow
 import net.minecraft.util.registry.Registry
 import net.minecraft.util.registry.RegistryKey
 
 class HomeCommand(val dispatcher: Dispatcher) {
     fun register() {
         dispatcher.register(
-            CommandManager.literal("home")
-                .executes { homeCommand(it) }
-                .then(
-                    CommandManager.argument("name", StringArgumentType.word())
-                        .executes { homeCommand(it, StringArgumentType.getString(it, "name")) }
-                        .suggests { context, builder ->
-                            PlayerDataManager.getHomes(context.source.player.uuid)?.forEach {
-                                builder.suggest(it.name)
-                            }
-
-                            builder.buildFuture()
+            AegisCommandBuilder("home") {
+                executes(::homeCommand)
+                word("name") {
+                    suggests { context, builder ->
+                        PlayerDataManager.getHomes(context.source.player.uuid)?.forEach {
+                            builder.suggest(it.name)
                         }
-                )
+                        builder.buildFuture()
+                    }
+                    executes { homeCommand(it, StringArgumentType.getString(it, "name")) }
+                }
+            }.build()
         )
     }
 

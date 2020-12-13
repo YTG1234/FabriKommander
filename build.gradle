@@ -31,6 +31,11 @@ repositories {
         url = "http://maven.fabricmc.net/"
     }
 
+    maven {
+        name = "Jitpack"
+        url = "https://jitpack.io/"
+    }
+
     mavenCentral()
 }
 
@@ -56,6 +61,8 @@ dependencies {
     shade "com.uchuhimo:konf-toml:${project.konf_version}"
     shade "com.charleskorn.kaml:kaml:${project.kaml_version}"
     shade "org.jetbrains.kotlinx:kotlinx-serialization-core:${project.kx_ser_version}"
+
+    include modImplementation("com.github.P03W:Aegis:9bc74b")
 }
 
 processResources {
