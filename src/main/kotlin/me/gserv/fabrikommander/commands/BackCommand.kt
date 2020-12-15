@@ -54,16 +54,18 @@ class BackCommand(val dispatcher: Dispatcher) {
             )
             return 0
         }
-        PlayerDataManager.setBackPos(player.uuid, Pos( // Thanks to @SpaceClouds42 for suggesting this
-            world = player.world.registryKey.value,
+        PlayerDataManager.setBackPos(
+            player.uuid, Pos( // Thanks to @SpaceClouds42 for suggesting this
+                world = player.world.registryKey.value,
 
-            x = player.x,
-            y = player.y,
-            z = player.z,
+                x = player.x,
+                y = player.y,
+                z = player.z,
 
-            yaw = player.yaw,
-            pitch = player.pitch
-        ))
+                yaw = player.yaw,
+                pitch = player.pitch
+            )
+        )
         player.teleport(world, pos.x, pos.y, pos.z, pos.yaw, pos.pitch)
         context.source.sendFeedback(
             green("Successfully teleported back to ") + aqua("X = ${pos.x.toInt()}, Y = ${pos.y.toInt()}, Z = ${pos.z.toInt()}"),

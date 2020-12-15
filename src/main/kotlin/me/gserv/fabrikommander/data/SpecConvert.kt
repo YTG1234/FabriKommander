@@ -21,13 +21,9 @@ fun OldHome.toNewHome() = Home(
 )
 
 fun OldPlayer.tonNewPlayer(): Player {
-    val newHomes: MutableList<Home> = mutableListOf()
-    this.homes.forEach {
-        newHomes.add(it.toNewHome())
-    }
     return Player(
         name = this.name,
-        homes = newHomes,
+        homes = this.homes.map { it.toNewHome() }.toMutableList(),
         backPos = null,
     )
 }
@@ -47,13 +43,9 @@ fun Home.toOldHome() = OldHome(
 
 fun Player.toOldPlayer(): OldPlayer {
     // Warning: Will lose backPos data!
-    val oldHomes: MutableList<OldHome> = mutableListOf()
-    this.homes.forEach {
-        oldHomes.add(it.toOldHome())
-    }
     return OldPlayer(
         name = this.name,
-        homes = oldHomes,
+        homes = this.homes.map { it.toOldHome() }.toMutableList(),
     )
 }
 // endregion
