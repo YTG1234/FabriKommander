@@ -5,16 +5,28 @@ import me.gserv.fabrikommander.data.spec.Pos
 import me.gserv.fabrikommander.utils.Context
 import me.gserv.fabrikommander.utils.Dispatcher
 import me.gserv.fabrikommander.utils.aqua
+import me.gserv.fabrikommander.utils.gold
 import me.gserv.fabrikommander.utils.green
 import me.gserv.fabrikommander.utils.identifierToWorldName
 import me.gserv.fabrikommander.utils.plus
 import me.gserv.fabrikommander.utils.red
 import me.gserv.fabrikommander.utils.yellow
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.server.command.CommandManager.literal
 import net.minecraft.util.registry.Registry
 import net.minecraft.util.registry.RegistryKey
 
 class BackCommand(val dispatcher: Dispatcher) {
+    companion object Utils {
+        // Mixin had a problem with @Shadow-ing sendMessage so I'm doing it here
+        fun sendDeathMessage(p: PlayerEntity) {
+            p.sendMessage(
+                gold("Oh no! Seems like you have died! ") + aqua("Use /back to get back to your death location."),
+                false
+            )
+        }
+    }
+
     fun register() {
         dispatcher.register(
             literal("back").executes(::backCommand)
