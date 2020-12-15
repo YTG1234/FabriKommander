@@ -19,6 +19,7 @@ import net.minecraft.util.registry.RegistryKey
 class BackCommand(val dispatcher: Dispatcher) {
     companion object Utils {
         // Mixin had a problem with @Shadow-ing sendMessage so I'm doing it here
+        // Also, apparently functions inside companion objects are automatically static, neat!
         fun sendDeathMessage(p: PlayerEntity) {
             p.sendMessage(
                 gold("Oh no! Seems like you have died! ") + aqua("Use /back to get back to your death location."),
@@ -53,6 +54,16 @@ class BackCommand(val dispatcher: Dispatcher) {
             )
             return 0
         }
+        PlayerDataManager.setBackPos(player.uuid, Pos( // Thanks to @SpaceClouds42 for suggesting this
+            world = player.world.registryKey.value,
+
+            x = player.x,
+            y = player.y,
+            z = player.z,
+
+            yaw = player.yaw,
+            pitch = player.pitch
+        ))
         player.teleport(world, pos.x, pos.y, pos.z, pos.yaw, pos.pitch)
         context.source.sendFeedback(
             green("Successfully teleported back to ") + aqua("X = ${pos.x.toInt()}, Y = ${pos.y.toInt()}, Z = ${pos.z.toInt()}"),

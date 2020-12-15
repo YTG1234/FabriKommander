@@ -73,6 +73,7 @@ object PlayerDataManager {
             val string = playerFile.readText()
             Yaml.default.decodeFromString(Player.serializer(), string)
         } catch (propError: UnknownPropertyException) {
+            // region YTG1234: Probably the most cursed piece of code I've ever made, excluding TeleportRequest
             // That failed
             logger.error("Unknown properties found, attempting to convert from old format...")
             try {
@@ -88,6 +89,7 @@ object PlayerDataManager {
                 logger.fatal("File " + playerFile.name + " is using an invalid format!")
                 throw oldPropError
             }
+            // endregion
         }
     }
 
