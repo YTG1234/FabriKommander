@@ -11,6 +11,8 @@ import me.gserv.fabrikommander.utils.click
 import me.gserv.fabrikommander.utils.reset
 import net.minecraft.command.argument.EntityArgumentType
 import net.minecraft.server.command.CommandManager.argument
+import net.minecraft.text.ClickEvent
+import net.minecraft.text.HoverEvent
 import net.minecraft.server.command.CommandManager.literal
 
 class TpaHereCommand(val dispatcher: Dispatcher) {
