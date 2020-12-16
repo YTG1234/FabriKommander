@@ -28,7 +28,20 @@ class TpaHereCommand(val dispatcher: Dispatcher) {
         val request = TeleportRequest(source = source, target = target, inverted = true)
         request.notifyTargetOfRequest()
         context.source.sendFeedback(
-            aqua("Teleport request sent to ") + target.displayName,
+            aqua("Teleport request sent to ") + target.displayName + 
+            reset(" [") + hover(
+                click(
+                    red("Cancel"),
+                    ClickEvent(
+                        ClickEvent.Action.RUN_COMMAND,
+                        "/tpcancel " + target.entityName // There can be multiple active requests
+                    )
+                ),
+                HoverEvent(
+                    HoverEvent.Action.SHOW_TEXT,
+                    red("Click here to cancel the request.")
+                )
+            ) + reset("]"),
             true
         )
         return 1
